@@ -44,6 +44,6 @@ module.exports = (app) => {
             }
         }
     })
-    app.services = services;
+    app.service = services;
 }
 
