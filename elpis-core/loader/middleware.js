@@ -11,9 +11,9 @@ const {sep} = path
  * => app.middleware.customModule.customMiddleware
  */ 
 module.exports = (app) => {
-    // 读取 app/middleware/**/**.js  下所有的文件
-    const middlewarePath = path.resolve(app.businessPath, `.${sep}middleware`);
-    const fileList = glob.sync(path.resolve(middlewarePath, `.${sep}**${sep}**.js`));
+    // 读取 app/middleware/**/*.js  下所有的文件
+    const middlewarePath = path.resolve(app.businessPath, 'middleware');
+    const fileList = glob.sync(path.resolve(middlewarePath, `**${sep}*.js`));
 
 
     //遍历所有文件目录，把内容加载到app.middlewares 下

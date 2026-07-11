@@ -36,12 +36,12 @@ module.exports = (app) => {
         } else if(app.env.isBeta()) { // 测试环境
             envConfig = require(path.resolve(configPath, `.${sep}config.beta.js`));
 
-        } else if(app.env.isProd()) { // 生产环境
+        } else if(app.env.isProduction()) { // 生产环境
             envConfig = require(path.resolve(configPath, `.${sep}config.prod.js`));
 
         }
     } catch (error) {
-        console.log(`env config not found: ${path.resolve(configPath, `.${sep}config.${app.env}.js`)}`);
+        console.log(`env config not found: ${path.resolve(configPath, `.${sep}config.${app.env.get()}.js`)}`);
     }
 
     // 覆盖并加载 config 配置

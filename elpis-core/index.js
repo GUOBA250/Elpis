@@ -56,15 +56,15 @@ module.exports = {
         //加载配置
         configLoader(app);
 
-        //加载路由模式
-        routerSchemaLoader(app);
-
         // 注册全局中间件
         try {
             require(`${app.businessPath}${sep}middleware.js`)(app);
         }catch (e) {
             console.error('注册全局中间件失败', e);
         }
+
+        //加载路由模式
+        routerSchemaLoader(app);
 
         //加载路由
         routerLoader(app);

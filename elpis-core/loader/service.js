@@ -11,9 +11,9 @@ const { sep } = path
  * => app.service.customModule.customService
  */
 module.exports = (app) => {
-    // 读取 app/service/**/**.js  下所有的文件
-    const servicePath = path.resolve(app.businessPath, `.${sep}service`);
-    const fileList = glob.sync(path.resolve(servicePath, `.${sep}**${sep}**.js`));
+    // 读取 app/service/**/*.js  下所有的文件
+    const servicePath = path.resolve(app.businessPath, 'service');
+    const fileList = glob.sync(path.resolve(servicePath, `**${sep}*.js`));
 
 
     //遍历所有文件目录，把内容加载到app.services 下
@@ -23,7 +23,7 @@ module.exports = (app) => {
         let name = path.resolve(file);
 
         // 截取路径
-        name = name.substring(name.lastIndexOf(`service${sep}`) + `services${sep}`.length, name.lastIndexOf(`.`));
+        name = name.substring(name.lastIndexOf(`service${sep}`) + `service${sep}`.length, name.lastIndexOf(`.`));
 
         // 把 ‘-’ 统一改成驼峰式
         name = name.replace(/-/g, (match) => match.toUpperCase());

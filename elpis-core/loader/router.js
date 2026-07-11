@@ -11,13 +11,13 @@ const { sep } = path; // 兼容不同操作系统上的斜杠
  */
 module.exports = (app) => {
     // 找到路由文件路径
-    const routerPath = path.resolve(app.businessPath, `${sep}router`);
+    const routerPath = path.resolve(app.businessPath, 'router');
     
     // 实例化 KoaRouter
     const router = new KoaRouter();
     
     // 注册所有路由
-    const fileList = glob.sync(path.resolve(routerPath, `.${sep}**${sep}**.js`));
+    const fileList = glob.sync(path.resolve(routerPath, `**${sep}*.js`));
     fileList.forEach((file) => {
 
         //module.exports = (app, router) => router.get('xxxx/x//x/x/', xxxController.index)

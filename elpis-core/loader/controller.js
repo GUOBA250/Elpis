@@ -11,9 +11,9 @@ const { sep } = path
  * => app.controller.customModule.customController
  */
 module.exports = (app) => {
-    // 读取 app/controller/**/**.js  下所有的文件
-    const controllerPath = path.resolve(app.businessPath, `.${sep}controller`);
-    const fileList = glob.sync(path.resolve(controllerPath, `.${sep}**${sep}**.js`));
+    // 读取 app/controller/**/*.js  下所有的文件
+    const controllerPath = path.resolve(app.businessPath, 'controller');
+    const fileList = glob.sync(path.resolve(controllerPath, `**${sep}*.js`));
 
 
     //遍历所有文件目录，把内容加载到app.controller 下
@@ -23,7 +23,7 @@ module.exports = (app) => {
         let name = path.resolve(file);
 
         // 截取路径
-        name = name.substring(name.lastIndexOf(`controller${sep}`) + `controllers${sep}`.length, name.lastIndexOf(`.`));
+        name = name.substring(name.lastIndexOf(`controller${sep}`) + `controller${sep}`.length, name.lastIndexOf(`.`));
 
         // 把 ‘-’ 统一改成驼峰式
         name = name.replace(/-/g, (match) => match.toUpperCase());
