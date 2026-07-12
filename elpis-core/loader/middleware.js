@@ -23,10 +23,10 @@ module.exports = (app) => {
         let name = path.resolve(file);
 
         // 截取路径
-        name = name.substring(name.lastIndexOf(`middleware${sep}`) + `middlewares${sep}`.length, name.lastIndexOf(`.`));
+        name = name.substring(name.lastIndexOf(`middleware${sep}`) + `middleware${sep}`.length, name.lastIndexOf(`.`));
         
         // 把 ‘-’ 统一改成驼峰式
-        name = name.replace(/-/g, (match) => match.toUpperCase());
+        name = name.replace(/-(\w)/g, (match, letter) => letter.toUpperCase());
 
         // 挂载 middleware 到内存 app 对象中
         let tempMiddleware = middlewares

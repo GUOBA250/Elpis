@@ -12,9 +12,8 @@ const { sep } = path
  * => app.extend.customExtend
  */
 module.exports = (app) => {
-    // 读取 app/extend/**.js  下所有的文件
-    const extendPath = path.resolve(app.businessPath, `.${sep}extend`);
-    const fileList = glob.sync(path.resolve(extendPath, `.${sep}**${sep}**.js`));
+    const extendPath = path.resolve(app.businessPath, 'extend');
+    const fileList = glob.sync(path.resolve(extendPath, `**${sep}*.js`));
 
 
     //遍历所有文件目录，把内容加载到app.extend 下
@@ -24,7 +23,7 @@ module.exports = (app) => {
         let name = path.resolve(file);
 
         // 截取路径
-        name = name.substring(name.lastIndexOf(`extend${sep}`) + `extends${sep}`.length, name.lastIndexOf(`.`));
+        name = name.substring(name.lastIndexOf(`extend${sep}`) + `extend${sep}`.length, name.lastIndexOf(`.`));
 
         // 把 ‘-’ 统一改成驼峰式 
         name = name.replace(/-/g, (match) => match.toUpperCase());
@@ -40,18 +39,15 @@ module.exports = (app) => {
         // 挂载 extend 到 app 上
         app[name] = require(path.resolve(file))(app);
 
-        // 挂载 extend 到内存 app 对象中
         let tempExtend = extend
-        const names = name.split(sep) //[customModule, customExtend]
+        const names = name.split(sep)
         for (let i = 0, len = names.length; i < len; i++) {
             if (i === len - 1) {
-                const ExtendModule = require(path.resolve(file))(app);
-                tempExtend[names[i]] = new ExtendModule();
+                tempExtend[names[i]] = app[name];
             } else {
                 if (!tempExtend[names[i]]) {
                     tempExtend[names[i]] = {}
                 }
-
                 tempExtend = tempExtend[names[i]]
             }
         }
