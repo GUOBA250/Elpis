@@ -1,0 +1,11 @@
+{
+    "files.associations": {
+        "*.tpl": "html",
+        "*.nunjucks": "html",
+        "*.njk": "html"
+    },
+    "emmet.includeLanguages": {
+        "html": "html"
+    },
+    "emmet.triggerExpansionOnTab": true
+}
