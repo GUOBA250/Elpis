@@ -1,5 +1,5 @@
 <template>
-    <h1>Page1</h1>
+    <h1>Page2</h1>
     <input v-model="content" />
     <div>
         {{ content }}
@@ -13,7 +13,7 @@ console.log('page2 init');
 
 </script>
 
-<style lane="less" scoped>
+<style lang="less" scoped>
 h1 {
     color: blue;
 }

@@ -10,7 +10,9 @@
     "prod": "_ENV='production' nodemon ./index.js",
     "dev:win": "set _ENV=local && nodemon ./index.js",
     "beta:win": "set _ENV=beta && nodemon ./index.js",
-    "prod:win": "set _ENV=production && nodemon ./index.js"
+    "prod:win": "set _ENV=production && nodemon ./index.js",
+    "build:dev": "node --max_old_space_size=4096 ./app/webpack/dev.js",
+    "build:prod": "node ./app/webpack/prod.js"
   },
   "keywords": [],
   "author": "锅巴",
@@ -55,7 +57,7 @@
     "assert": "^2.0.0",
     "babel-eslint": "^10.0.2",
     "babel-loader": "^8.0.4",
-    "clean-webpack-plugin": "^0.1.19",
+    "clean-webpack-plugin": "^4.0.0",
     "consoler": "^0.2.0",
     "css-loader": "^0.23.1",
     "css-minimizer-webpack-plugin": "^5.0.1",
@@ -75,6 +77,7 @@
     "style-loader": "^0.14.1",
     "supertest": "^4.0.2",
     "terser-webpack-plugin": "^2.3.5",
+    "thread-loader": "^4.0.4",
     "url-loader": "^4.1.1",
     "validate-commit-msg": "^2.14.0",
     "vue-eslint-parser": "^10.4.1",
