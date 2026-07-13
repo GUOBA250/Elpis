@@ -1,8 +1,10 @@
 <template>
-    <h1>Page1</h1>
-    <input v-model="content" />
-    <div>
-        {{ content }}
+    <div class="page1-container">
+        <h1>Page1</h1>
+        <input v-model="content" placeholder="请输入内容" />
+        <div>
+            {{ content }}
+        </div>
     </div>
 </template>
 
@@ -13,7 +15,11 @@ console.log('page1 init');
 
 </script>
 
-<style lane="less" scoped>
+<style lang="less" scoped>
+.page1-container {
+    min-height: 100vh;
+    padding: 20px;
+}
 h1 {
     color: red;
 }
