@@ -1,0 +1,137 @@
+[2026-07-12T13:01:33.709] [INFO] application - 123
+[2026-07-12T13:17:56.433] [INFO] application - 123
+[2026-07-12T13:17:57.031] [INFO] application - 123
+[2026-07-12T13:26:37.297] [INFO] application - {"cause":{},"isOperational":true}
+[2026-07-12T13:26:37.297] [ERROR] application - [-- exception --] OperationalError: template not found: output/entry.nonexistent.tpl
+    at createTemplate (/Users/a1-6/workspace/Elpis/node_modules/.pnpm/nunjucks@3.2.4/node_modules/nunjucks/src/environment.js:234:15)
+    ... 14 lines matching cause stack trace ...
+    at new Promise (<anonymous>) {
+  cause: Error: template not found: output/entry.nonexistent.tpl
+      at createTemplate (/Users/a1-6/workspace/Elpis/node_modules/.pnpm/nunjucks@3.2.4/node_modules/nunjucks/src/environment.js:234:15)
+      at next (/Users/a1-6/workspace/Elpis/node_modules/.pnpm/nunjucks@3.2.4/node_modules/nunjucks/src/lib.js:260:7)
+      at handle (/Users/a1-6/workspace/Elpis/node_modules/.pnpm/nunjucks@3.2.4/node_modules/nunjucks/src/environment.js:267:11)
+      at /Users/a1-6/workspace/Elpis/node_modules/.pnpm/nunjucks@3.2.4/node_modules/nunjucks/src/environment.js:276:9
+      at next (/Users/a1-6/workspace/Elpis/node_modules/.pnpm/nunjucks@3.2.4/node_modules/nunjucks/src/lib.js:258:7)
+      at Object.asyncIter (/Users/a1-6/workspace/Elpis/node_modules/.pnpm/nunjucks@3.2.4/node_modules/nunjucks/src/lib.js:263:3)
+      at Environment.getTemplate (/Users/a1-6/workspace/Elpis/node_modules/.pnpm/nunjucks@3.2.4/node_modules/nunjucks/src/environment.js:259:9)
+      at Environment.render (/Users/a1-6/workspace/Elpis/node_modules/.pnpm/nunjucks@3.2.4/node_modules/nunjucks/src/environment.js:295:10)
+      at Environment.promisified [as renderAsync] (/Users/a1-6/workspace/Elpis/node_modules/.pnpm/bluebird@3.7.2/node_modules/bluebird/js/release/promisify.js:223:16)
+      at _callee$ (/Users/a1-6/workspace/Elpis/node_modules/.pnpm/koa-nunjucks-2@3.0.2/node_modules/koa-nunjucks-2/compiled.js:109:64)
+      at tryCatch (/Users/a1-6/workspace/Elpis/node_modules/.pnpm/regenerator-runtime@0.11.1/node_modules/regenerator-runtime/runtime.js:62:40)
+      at Generator.invoke [as _invoke] (/Users/a1-6/workspace/Elpis/node_modules/.pnpm/regenerator-runtime@0.11.1/node_modules/regenerator-runtime/runtime.js:296:22)
+      at prototype.<computed> [as next] (/Users/a1-6/workspace/Elpis/node_modules/.pnpm/regenerator-runtime@0.11.1/node_modules/regenerator-runtime/runtime.js:114:21)
+      at step (/Users/a1-6/workspace/Elpis/node_modules/.pnpm/babel-runtime@6.26.0/node_modules/babel-runtime/helpers/asyncToGenerator.js:17:30)
+      at /Users/a1-6/workspace/Elpis/node_modules/.pnpm/babel-runtime@6.26.0/node_modules/babel-runtime/helpers/asyncToGenerator.js:35:14
+      at new Promise (<anonymous>),
+  isOperational: true
+}
+[2026-07-12T13:26:37.298] [ERROR] application - [-- exception --] undefined template not found: output/entry.nonexistent.tpl undefined
+[2026-07-12T13:27:40.910] [INFO] application - {}
+[2026-07-12T13:27:40.910] [ERROR] application - [-- exception --] Error: 测试错误处理中间件
+    at ProjectController.testError (/Users/a1-6/workspace/Elpis/app/controller/project.js:15:19)
+    at dispatch (/Users/a1-6/workspace/Elpis/node_modules/.pnpm/koa-compose@3.2.1/node_modules/koa-compose/index.js:44:32)
+    at next (/Users/a1-6/workspace/Elpis/node_modules/.pnpm/koa-compose@3.2.1/node_modules/koa-compose/index.js:45:18)
+    at /Users/a1-6/workspace/Elpis/node_modules/.pnpm/koa-router@7.4.0/node_modules/koa-router/lib/router.js:346:16
+    at dispatch (/Users/a1-6/workspace/Elpis/node_modules/.pnpm/koa-compose@3.2.1/node_modules/koa-compose/index.js:44:32)
+    at /Users/a1-6/workspace/Elpis/node_modules/.pnpm/koa-compose@3.2.1/node_modules/koa-compose/index.js:36:12
+    at dispatch (/Users/a1-6/workspace/Elpis/node_modules/.pnpm/koa-router@7.4.0/node_modules/koa-router/lib/router.js:351:31)
+    at dispatch (/Users/a1-6/workspace/Elpis/node_modules/.pnpm/koa-compose@4.1.0/node_modules/koa-compose/index.js:42:32)
+    at /Users/a1-6/workspace/Elpis/app/middleware/error-handler.js:9:19
+    at dispatch (/Users/a1-6/workspace/Elpis/node_modules/.pnpm/koa-compose@4.1.0/node_modules/koa-compose/index.js:42:32)
+    at bodyParser (/Users/a1-6/workspace/Elpis/node_modules/.pnpm/koa-bodyparser@4.4.1/node_modules/koa-bodyparser/index.js:78:11)
+[2026-07-12T13:27:40.910] [ERROR] application - [-- exception --] undefined 测试错误处理中间件 undefined
+[2026-07-12T13:48:54.934] [INFO] application - {"cause":{},"isOperational":true}
+[2026-07-12T13:48:54.934] [ERROR] application - [-- exception --] OperationalError: template not found: output/entry.nonexistent.tpl
+    at createTemplate (/Users/a1-6/workspace/Elpis/node_modules/.pnpm/nunjucks@3.2.4/node_modules/nunjucks/src/environment.js:234:15)
+    ... 14 lines matching cause stack trace ...
+    at new Promise (<anonymous>) {
+  cause: Error: template not found: output/entry.nonexistent.tpl
+      at createTemplate (/Users/a1-6/workspace/Elpis/node_modules/.pnpm/nunjucks@3.2.4/node_modules/nunjucks/src/environment.js:234:15)
+      at next (/Users/a1-6/workspace/Elpis/node_modules/.pnpm/nunjucks@3.2.4/node_modules/nunjucks/src/lib.js:260:7)
+      at handle (/Users/a1-6/workspace/Elpis/node_modules/.pnpm/nunjucks@3.2.4/node_modules/nunjucks/src/environment.js:267:11)
+      at /Users/a1-6/workspace/Elpis/node_modules/.pnpm/nunjucks@3.2.4/node_modules/nunjucks/src/environment.js:276:9
+      at next (/Users/a1-6/workspace/Elpis/node_modules/.pnpm/nunjucks@3.2.4/node_modules/nunjucks/src/lib.js:258:7)
+      at Object.asyncIter (/Users/a1-6/workspace/Elpis/node_modules/.pnpm/nunjucks@3.2.4/node_modules/nunjucks/src/lib.js:263:3)
+      at Environment.getTemplate (/Users/a1-6/workspace/Elpis/node_modules/.pnpm/nunjucks@3.2.4/node_modules/nunjucks/src/environment.js:259:9)
+      at Environment.render (/Users/a1-6/workspace/Elpis/node_modules/.pnpm/nunjucks@3.2.4/node_modules/nunjucks/src/environment.js:295:10)
+      at Environment.promisified [as renderAsync] (/Users/a1-6/workspace/Elpis/node_modules/.pnpm/bluebird@3.7.2/node_modules/bluebird/js/release/promisify.js:223:16)
+      at _callee$ (/Users/a1-6/workspace/Elpis/node_modules/.pnpm/koa-nunjucks-2@3.0.2/node_modules/koa-nunjucks-2/compiled.js:109:64)
+      at tryCatch (/Users/a1-6/workspace/Elpis/node_modules/.pnpm/regenerator-runtime@0.11.1/node_modules/regenerator-runtime/runtime.js:62:40)
+      at Generator.invoke [as _invoke] (/Users/a1-6/workspace/Elpis/node_modules/.pnpm/regenerator-runtime@0.11.1/node_modules/regenerator-runtime/runtime.js:296:22)
+      at prototype.<computed> [as next] (/Users/a1-6/workspace/Elpis/node_modules/.pnpm/regenerator-runtime@0.11.1/node_modules/regenerator-runtime/runtime.js:114:21)
+      at step (/Users/a1-6/workspace/Elpis/node_modules/.pnpm/babel-runtime@6.26.0/node_modules/babel-runtime/helpers/asyncToGenerator.js:17:30)
+      at /Users/a1-6/workspace/Elpis/node_modules/.pnpm/babel-runtime@6.26.0/node_modules/babel-runtime/helpers/asyncToGenerator.js:35:14
+      at new Promise (<anonymous>),
+  isOperational: true
+}
+[2026-07-12T13:48:54.934] [ERROR] application - [-- exception --] undefined template not found: output/entry.nonexistent.tpl undefined
+[2026-07-12T13:49:02.546] [INFO] application - [$method] /api/project/list signature: baa60f87fa3f62f0432d932bbbbd54e5
+[2026-07-12T14:35:55.694] [INFO] application - [$method] /api/project/list signature: baa60f87fa3f62f0432d932bbbbd54e5
+[2026-07-12T14:36:07.264] [INFO] application - [$method] /api/project/list signature: 3fd2afaa5067382a3b8e03b3b575f5bb
+[2026-07-12T14:36:07.264] [INFO] application - [GET /api/project/list] query: {}
+[2026-07-12T14:36:07.268] [INFO] application - {}
+[2026-07-12T14:36:07.268] [ERROR] application - [-- exception --] Error: no schema with key or ref "http://json-schema.org/draft/07/schema#"
+    at Ajv.validate (/Users/a1-6/workspace/Elpis/node_modules/.pnpm/ajv@6.15.0/node_modules/ajv/lib/ajv.js:93:19)
+    at Ajv.validateSchema (/Users/a1-6/workspace/Elpis/node_modules/.pnpm/ajv@6.15.0/node_modules/ajv/lib/ajv.js:174:20)
+    at Ajv._addSchema (/Users/a1-6/workspace/Elpis/node_modules/.pnpm/ajv@6.15.0/node_modules/ajv/lib/ajv.js:307:10)
+    at Ajv.compile (/Users/a1-6/workspace/Elpis/node_modules/.pnpm/ajv@6.15.0/node_modules/ajv/lib/ajv.js:113:24)
+    at /Users/a1-6/workspace/Elpis/app/middleware/api-params-verify.js:39:28
+    at dispatch (/Users/a1-6/workspace/Elpis/node_modules/.pnpm/koa-compose@4.1.0/node_modules/koa-compose/index.js:42:32)
+    at /Users/a1-6/workspace/Elpis/app/middleware/api-sign-verify.js:32:15
+    at dispatch (/Users/a1-6/workspace/Elpis/node_modules/.pnpm/koa-compose@4.1.0/node_modules/koa-compose/index.js:42:32)
+    at /Users/a1-6/workspace/Elpis/app/middleware/error-handler.js:9:19
+    at dispatch (/Users/a1-6/workspace/Elpis/node_modules/.pnpm/koa-compose@4.1.0/node_modules/koa-compose/index.js:42:32)
+    at bodyParser (/Users/a1-6/workspace/Elpis/node_modules/.pnpm/koa-bodyparser@4.4.1/node_modules/koa-bodyparser/index.js:78:11)
+[2026-07-12T14:36:07.268] [ERROR] application - [-- exception --] undefined no schema with key or ref "http://json-schema.org/draft/07/schema#" undefined
+[2026-07-12T14:36:15.862] [INFO] application - [$method] /api/project/list signature: c58b5fb915bf2c670662ec084795c3a9
+[2026-07-12T14:36:15.862] [INFO] application - [GET /api/project/list] query: {}
+[2026-07-12T14:36:15.862] [INFO] application - {}
+[2026-07-12T14:36:15.863] [ERROR] application - [-- exception --] Error: no schema with key or ref "http://json-schema.org/draft/07/schema#"
+    at Ajv.validate (/Users/a1-6/workspace/Elpis/node_modules/.pnpm/ajv@6.15.0/node_modules/ajv/lib/ajv.js:93:19)
+    at Ajv.validateSchema (/Users/a1-6/workspace/Elpis/node_modules/.pnpm/ajv@6.15.0/node_modules/ajv/lib/ajv.js:174:20)
+    at Ajv._addSchema (/Users/a1-6/workspace/Elpis/node_modules/.pnpm/ajv@6.15.0/node_modules/ajv/lib/ajv.js:307:10)
+    at Ajv.compile (/Users/a1-6/workspace/Elpis/node_modules/.pnpm/ajv@6.15.0/node_modules/ajv/lib/ajv.js:113:24)
+    at /Users/a1-6/workspace/Elpis/app/middleware/api-params-verify.js:39:28
+    at dispatch (/Users/a1-6/workspace/Elpis/node_modules/.pnpm/koa-compose@4.1.0/node_modules/koa-compose/index.js:42:32)
+    at /Users/a1-6/workspace/Elpis/app/middleware/api-sign-verify.js:32:15
+    at dispatch (/Users/a1-6/workspace/Elpis/node_modules/.pnpm/koa-compose@4.1.0/node_modules/koa-compose/index.js:42:32)
+    at /Users/a1-6/workspace/Elpis/app/middleware/error-handler.js:9:19
+    at dispatch (/Users/a1-6/workspace/Elpis/node_modules/.pnpm/koa-compose@4.1.0/node_modules/koa-compose/index.js:42:32)
+    at bodyParser (/Users/a1-6/workspace/Elpis/node_modules/.pnpm/koa-bodyparser@4.4.1/node_modules/koa-bodyparser/index.js:78:11)
+[2026-07-12T14:36:15.863] [ERROR] application - [-- exception --] undefined no schema with key or ref "http://json-schema.org/draft/07/schema#" undefined
+[2026-07-12T14:36:50.085] [INFO] application - [$method] /api/project/list signature: b162fffc8a6b3a4d815b9fe666ed94b1
+[2026-07-12T14:36:50.086] [INFO] application - [GET /api/project/list] query: {}
+[2026-07-12T14:36:50.098] [INFO] application - [$method] /api/project/list signature: b162fffc8a6b3a4d815b9fe666ed94b1
+[2026-07-12T14:36:50.099] [INFO] application - [GET /api/project/list] query: {"proj_key":"p1"}
+[2026-07-12T14:36:58.113] [INFO] application - [$method] /api/project/list signature: baa60f87fa3f62f0432d932bbbbd54e5
+[2026-07-12T14:37:19.124] [INFO] application - {"cause":{},"isOperational":true}
+[2026-07-12T14:37:19.124] [ERROR] application - [-- exception --] OperationalError: template not found: output/entry.nonexistent.tpl
+    at createTemplate (/Users/a1-6/workspace/Elpis/node_modules/.pnpm/nunjucks@3.2.4/node_modules/nunjucks/src/environment.js:234:15)
+    ... 14 lines matching cause stack trace ...
+    at new Promise (<anonymous>) {
+  cause: Error: template not found: output/entry.nonexistent.tpl
+      at createTemplate (/Users/a1-6/workspace/Elpis/node_modules/.pnpm/nunjucks@3.2.4/node_modules/nunjucks/src/environment.js:234:15)
+      at next (/Users/a1-6/workspace/Elpis/node_modules/.pnpm/nunjucks@3.2.4/node_modules/nunjucks/src/lib.js:260:7)
+      at handle (/Users/a1-6/workspace/Elpis/node_modules/.pnpm/nunjucks@3.2.4/node_modules/nunjucks/src/environment.js:267:11)
+      at /Users/a1-6/workspace/Elpis/node_modules/.pnpm/nunjucks@3.2.4/node_modules/nunjucks/src/environment.js:276:9
+      at next (/Users/a1-6/workspace/Elpis/node_modules/.pnpm/nunjucks@3.2.4/node_modules/nunjucks/src/lib.js:258:7)
+      at Object.asyncIter (/Users/a1-6/workspace/Elpis/node_modules/.pnpm/nunjucks@3.2.4/node_modules/nunjucks/src/lib.js:263:3)
+      at Environment.getTemplate (/Users/a1-6/workspace/Elpis/node_modules/.pnpm/nunjucks@3.2.4/node_modules/nunjucks/src/environment.js:259:9)
+      at Environment.render (/Users/a1-6/workspace/Elpis/node_modules/.pnpm/nunjucks@3.2.4/node_modules/nunjucks/src/environment.js:295:10)
+      at Environment.promisified [as renderAsync] (/Users/a1-6/workspace/Elpis/node_modules/.pnpm/bluebird@3.7.2/node_modules/bluebird/js/release/promisify.js:223:16)
+      at _callee$ (/Users/a1-6/workspace/Elpis/node_modules/.pnpm/koa-nunjucks-2@3.0.2/node_modules/koa-nunjucks-2/compiled.js:109:64)
+      at tryCatch (/Users/a1-6/workspace/Elpis/node_modules/.pnpm/regenerator-runtime@0.11.1/node_modules/regenerator-runtime/runtime.js:62:40)
+      at Generator.invoke [as _invoke] (/Users/a1-6/workspace/Elpis/node_modules/.pnpm/regenerator-runtime@0.11.1/node_modules/regenerator-runtime/runtime.js:296:22)
+      at prototype.<computed> [as next] (/Users/a1-6/workspace/Elpis/node_modules/.pnpm/regenerator-runtime@0.11.1/node_modules/regenerator-runtime/runtime.js:114:21)
+      at step (/Users/a1-6/workspace/Elpis/node_modules/.pnpm/babel-runtime@6.26.0/node_modules/babel-runtime/helpers/asyncToGenerator.js:17:30)
+      at /Users/a1-6/workspace/Elpis/node_modules/.pnpm/babel-runtime@6.26.0/node_modules/babel-runtime/helpers/asyncToGenerator.js:35:14
+      at new Promise (<anonymous>),
+  isOperational: true
+}
+[2026-07-12T14:37:19.124] [ERROR] application - [-- exception --] undefined template not found: output/entry.nonexistent.tpl undefined
+[2026-07-12T14:37:35.041] [INFO] application - [$method] /api/project/list signature: 111a23b7c47826bdfdd1039d855abb9c
+[2026-07-12T14:37:40.446] [INFO] application - [$method] /api/project/list signature: 05d0ef46bb2ba89026459364ab9f3d40
+[2026-07-12T14:37:45.972] [INFO] application - [$method] /api/project/list signature: 708830ecce6438f7332a1183a6185587
+[2026-07-12T14:37:45.972] [INFO] application - [GET /api/project/list] query: {"proj_key":"nonexistent"}
+[2026-07-12T14:37:51.716] [INFO] application - [$method] /api/nonexistent signature: ab3e25adb2e6a11816f55186abbb392f
+[2026-07-12T14:37:51.716] [INFO] application - [GET /api/nonexistent] query: {}
