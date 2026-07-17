@@ -1,6 +1,6 @@
 <template>
     <h1>Page2</h1>
-    <input v-model="content" />
+    <el-input v-model="content" placeholder="请输入内容" style="width: 150px;" />
     <div>
         {{ content }}
     </div>

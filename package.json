@@ -76,7 +76,7 @@
     "mocha": "^6.1.4",
     "style-loader": "^0.14.1",
     "supertest": "^4.0.2",
-    "terser-webpack-plugin": "^2.3.5",
+    "terser-webpack-plugin": "^5.6.1",
     "thread-loader": "^4.0.4",
     "url-loader": "^4.1.1",
     "validate-commit-msg": "^2.14.0",

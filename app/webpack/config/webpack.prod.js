@@ -85,7 +85,6 @@ const webpackConfig = merge.smart(baseConfig, {
         minimize: true,
         minimizer: [
             new TerserPlugin({
-                cache: true, // 启用缓存来加速构建过程
                 parallel: true, // 利用多核 CPU 的优势来加快压缩速度
                 terserOptions: {
                     compress: {

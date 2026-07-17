@@ -1,7 +1,7 @@
 <template>
     <div class="page1-container">
         <h1>Page1</h1>
-        <input v-model="content" placeholder="请输入内容" />
+        <el-input v-model="content" placeholder="请输入内容" style="width: 300px;" />
         <div>
             {{ content }}
         </div>
