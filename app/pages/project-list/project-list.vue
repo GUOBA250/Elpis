@@ -1,5 +1,5 @@
 <template>
-    <header-container :title="项目列表">
+    <header-container title="项目列表">
         <template #main-content>
             <div class="main-content">
                 项目列表

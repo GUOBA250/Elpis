@@ -1,8 +1,8 @@
 <template>
     <el-container class="header-container">
         <el-header class="header">
-            <el-row type="flex" align="middle" class="header-row">
-                <el-row type="flex" align="middle" class="title-panel">
+            <el-row type="flex" align="middle" class="header-row" justify="start">
+                <el-row type="flex" align="middle" class="title-panel" justify="start">
                     <img src="./asserts/logo.png" class="logo" />
                     <el-row class="text">{{ title }}</el-row>
                 </el-row>
@@ -28,6 +28,8 @@ defineProps({
 
     .header {
         max-height: 120px;
+        height: 60px;
+        line-height: 60px;
         border-bottom: 1px solid #e8e8e8;
 
         .header-row {
@@ -39,6 +41,7 @@ defineProps({
                     width: 25px;
                     height: 25px;
                     border-radius: 50%;
+                    vertical-align: middle;
                 }
                 .text {
                     font-size: 15px;
@@ -48,10 +51,17 @@ defineProps({
         }
     }
 
-    .main-container {}
+    .main-container {
+        padding: 0;
+    }
 }
 
 :deep(.el-header) {
     padding: 0
+}
+
+:deep(.el-row) {
+    display: flex;
+    flex-wrap: wrap;
 }
 </style>
