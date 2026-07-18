@@ -2,10 +2,10 @@ import { createApp } from 'vue'
 
 // 引入 element-plus
 import ElementPlus from 'element-plus'
-import pinia from './store'
+import pinia from '../store'
 import { createRouter, createWebHashHistory } from 'vue-router'
-import 'element-plus/theme-chalk/index.css'
-import './asserts/custom.css'
+import 'element-plus/dist/index.css'
+import '../asserts/custom.css'
 
 
 
