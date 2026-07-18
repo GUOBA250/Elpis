@@ -1,0 +1,2 @@
+[2026-07-13T11:51:57.976] [INFO] application - [$method] /api/project/list signature: 3fcef8e77b405b8570810f7640e2bbc0
+[2026-07-13T11:51:57.977] [INFO] application - [GET /api/project/list] query: {}
