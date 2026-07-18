@@ -1,8 +1,8 @@
 <template>
-    <header-container>
+    <header-container :title>
         <template #main-content>
             <div class="main-content">
-                <h1>Project List</h1>
+                项目列表
             </div>
         </template>
     </header-container>
