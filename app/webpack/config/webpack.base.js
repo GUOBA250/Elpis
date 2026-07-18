@@ -68,13 +68,10 @@ module.exports = {
                 loader: 'babel-loader',
             }
         }, {
-            test: /\.(png|jpe?g|gif)(\?.+)?$/,
-            use: {
-                loader: 'url-loader',
-                options: {
-                    limit: 300,
-                    esModule: false
-                }
+            test: /\.(png|jpe?g|gif|svg)(\?.+)?$/,
+            type: 'asset/resource',
+            generator: {
+                publicPath: '/dist/prod/'
             }
         }, {
             test: /\.css$/,
@@ -83,8 +80,11 @@ module.exports = {
             test: /\.less$/,
             use: ['style-loader', 'css-loader', 'less-loader']
         }, {
-            test: /\.(eot|svg|ttf|woff|woff2)(\?\S*)?$/,
-            use: 'file-loader'
+            test: /\.(eot|ttf|woff|woff2)(\?\S*)?$/,
+            type: 'asset/resource',
+            generator: {
+                publicPath: '/dist/prod/'
+            }
         }]
     },
     // 产物输出路径
