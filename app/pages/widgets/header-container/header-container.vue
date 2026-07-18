@@ -6,6 +6,10 @@
                     <img src="./asserts/logo.png" class="logo" />
                     <el-row class="text">{{ title }}</el-row>
                 </el-row>
+                <!-- 插槽：菜单区域 -->
+                <slot name="menu-content"></slot>
+                <!-- 右上方区域 -->
+                <slot name="operation-content"></slot>
             </el-row>
         </el-header>
         <el-main class="main-container">
@@ -36,6 +40,7 @@ defineProps({
             .title-panel {
                 width: 180px;
                 min-width: 180px;
+
                 .logo {
                     margin-right: 10px;
                     width: 25px;
@@ -43,6 +48,7 @@ defineProps({
                     border-radius: 50%;
                     vertical-align: middle;
                 }
+
                 .text {
                     font-size: 15px;
                     font-weight: 500;
