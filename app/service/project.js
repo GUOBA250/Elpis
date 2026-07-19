@@ -1,22 +1,32 @@
-const modelList = [
-    {
-        model: { key: 'm1', name: 'model1', desc: '模型1' },
-        project: {
-            p1: { key: 'p1', name: 'project1', desc: '项目1', homePage: '/page1' },
-            p2: { key: 'p2', name: 'project2', desc: '项目2', homePage: '/page2' },
-        }
-    },
-    {
-        model: { key: 'm2', name: 'model2', desc: '模型2' },
-        project: {
-            p3: { key: 'p3', name: 'project3', desc: '项目3', homePage: '/page3' },
-        }
-    }
-]
-
 module.exports = (app) => {
     const BaseService = require('./base')(app);
+    const getModelList = require('../model/index.js')
+    const modelList = getModelList()
     return class ProjectService extends BaseService {
+        /**
+         * 获取当前 projectKey 对应模型下的项目列表（如果 projectKey 为空，则返回所有项目）
+         * @param {string} projKey 项目模型键
+         * @returns {Promise<Array>}
+         */
+        getList(projKey) {
+            const projectList = []
+
+            return modelList.reduce((preList, modelItem) => {
+                const { project } = modelItem
+
+                if (projKey) {
+                    if (project[projKey]) {
+                        preList.push(project[projKey])
+                    }
+                } else {
+                    for (const pKey in project) {
+                        preList.push(project[pKey])
+                    }
+                }
+
+                return preList
+            }, [])
+        }
         /**
          * 获取项目模型列表
          * @returns {Promise<Array>}

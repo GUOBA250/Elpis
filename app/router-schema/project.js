@@ -6,7 +6,16 @@ module.exports = {
         delete: {},
     },
     '/api/project/list': {
-        get: {},
+        get: {
+            query: {
+                type: 'object',
+                properties: {
+                    proj_key: {
+                        type: 'string',
+                    }
+                }
+            },
+        },
         post: {},
     }
 }
