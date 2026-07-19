@@ -9,7 +9,8 @@ module.exports = (app) => {
             await next();
         } catch (e) {
             // 异常处理
-            const { status, message, detail } = e
+            const err = e || {}
+            const { status, message, detail } = err
             app.logger.info(JSON.stringify(e))
             app.logger.error('[-- exception --]', e)
             app.logger.error('[-- exception --]', status, message, detail)

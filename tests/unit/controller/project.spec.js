@@ -108,4 +108,58 @@ describe('ProjectController', () => {
             expect(emptyItem.model.key).toBe('m3')
         })
     })
+
+    describe('get', () => {
+        it('should return project when projKey exists', () => {
+            mockCtx.request.query = { proj_key: 'p1' }
+            projectController.get(mockCtx)
+
+            expect(mockCtx.body).toBeDefined()
+            expect(mockCtx.body.success).toBe(true)
+            expect(mockCtx.body.data).toBeDefined()
+            expect(mockCtx.body.data.key).toBe('p1')
+            expect(mockCtx.body.data.name).toBe('项目1')
+        })
+
+        it('should return error when projKey is not provided', () => {
+            mockCtx.request.query = {}
+            projectController.get(mockCtx)
+
+            expect(mockCtx.body).toBeDefined()
+            expect(mockCtx.body.success).toBe(false)
+            expect(mockCtx.body.code).toBe(442)
+            expect(mockCtx.body.message).toBe('项目标识不能为空')
+        })
+
+        it('should return error when projKey is empty', () => {
+            mockCtx.request.query = { proj_key: '' }
+            projectController.get(mockCtx)
+
+            expect(mockCtx.body).toBeDefined()
+            expect(mockCtx.body.success).toBe(false)
+            expect(mockCtx.body.code).toBe(442)
+            expect(mockCtx.body.message).toBe('项目标识不能为空')
+        })
+
+        it('should return error when projKey does not exist', () => {
+            mockCtx.request.query = { proj_key: 'nonexistent' }
+            projectController.get(mockCtx)
+
+            expect(mockCtx.body).toBeDefined()
+            expect(mockCtx.body.success).toBe(false)
+            expect(mockCtx.body.code).toBe(404)
+            expect(mockCtx.body.message).toBe('项目不存在')
+        })
+
+        it('should return project with correct fields', () => {
+            mockCtx.request.query = { proj_key: 'p1' }
+            projectController.get(mockCtx)
+
+            const project = mockCtx.body.data
+            expect(project).toHaveProperty('key')
+            expect(project).toHaveProperty('name')
+            expect(project).toHaveProperty('desc')
+            expect(project).toHaveProperty('homePage')
+        })
+    })
 })

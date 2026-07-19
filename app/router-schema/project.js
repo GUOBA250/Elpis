@@ -17,5 +17,19 @@ module.exports = {
             },
         },
         post: {},
+    },
+    '/api/project': {
+        get: {
+            query: {
+                type: 'object',
+                properties: {
+                    proj_key: {
+                        type: 'string',
+                    }
+                },
+                required: ['proj_key'],
+            },
+        },
+        post: {},
     }
 }

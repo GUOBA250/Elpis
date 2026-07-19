@@ -4,6 +4,21 @@ module.exports = (app) => {
     const modelList = getModelList()
     return class ProjectService extends BaseService {
         /**
+         * 根据proj_key获取项目详情
+         * @param {string} projKey 项目模型键
+         * @returns {Promise<Object>}
+         * */
+        get(projKey) {
+            let projectConfig = null
+            modelList.forEach(modelItem => {
+                const { project } = modelItem
+                if (project[projKey]) {
+                    projectConfig = project[projKey]
+                }
+            })
+            return projectConfig
+        }
+        /**
          * 获取当前 projectKey 对应模型下的项目列表（如果 projectKey 为空，则返回所有项目）
          * @param {string} projKey 项目模型键
          * @returns {Promise<Array>}

@@ -6,7 +6,7 @@ const log4js = require('log4js');
  */
 module.exports = (app) => {
     let logger
-    if (app.env.isLocal()) {
+    if (typeof app.env.isLocal === 'function' && app.env.isLocal()) {
         // 打印在控制台即可
         logger = console
     } else {

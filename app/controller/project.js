@@ -2,6 +2,29 @@ module.exports = (app) => {
     const BaseController = require('./base')(app)
     return class ProjectController extends BaseController {
         /**
+         * 根据proj_key获取项目详情
+         * @param {object} ctx 上下文
+         */
+        get(ctx) {
+            const {
+                proj_key: projKey
+            } = ctx.request.query
+            const { project: projectService } = app.service;
+            
+            if (!projKey) {
+                this.fail(ctx, '项目标识不能为空', 442)
+                return
+            }
+            
+            const projectConfig = projectService.get(projKey);
+
+            if (!projectConfig) {
+                this.fail(ctx, '项目不存在', 404)
+                return
+            }
+            this.success(ctx, projectConfig)
+        }
+        /**
          * 获取当前 projectKey 对应模型下的项目列表（如果 projectKey 为空，则返回所有项目）
          * @param {object} ctx 上下文
          */
