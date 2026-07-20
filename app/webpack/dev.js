@@ -43,3 +43,8 @@ app.use(hotMiddleware(compiler, {
     path: `${devServerConfig.HMR_PATH}`,
     log: () => {}
 }))
+
+// 启动 devServer
+app.listen(devServerConfig.PORT, devServerConfig.HOST, () => {
+    console.log(`webpack dev server running at http://${devServerConfig.HOST}:${devServerConfig.PORT}`)
+})

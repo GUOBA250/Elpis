@@ -1,4 +1,5 @@
 import axios from 'axios'
+import md5 from 'md5'
 
 const $curl = async function (options) {
     const {
@@ -11,6 +12,10 @@ const $curl = async function (options) {
         timeout = 30000
     } = options
 
+    const signKey = 'klklfadfkj1341adjoiwejhwqhghj123'
+    const st = Date.now().toString()
+    const sSign = md5(`${signKey}_${st}`)
+
     try {
         const response = await axios({
             method,
@@ -19,6 +24,8 @@ const $curl = async function (options) {
             params,
             headers: {
                 'Content-Type': 'application/json',
+                's_sign': sSign,
+                's_t': st,
                 ...headers
             },
             timeout

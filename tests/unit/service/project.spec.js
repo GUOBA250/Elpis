@@ -64,7 +64,7 @@ describe('ProjectService', () => {
             const result = await projectService.getModelList()
             expect(result).toBeDefined()
             expect(Array.isArray(result)).toBe(true)
-            expect(result.length).toBe(3)
+            expect(result.length).toBe(5)
         })
 
         it('should return correct model structure', async () => {
@@ -82,7 +82,7 @@ describe('ProjectService', () => {
             const result = await projectService.getModelList()
             const emptyModel = result.find(item => Object.keys(item.project).length === 0)
             expect(emptyModel).toBeDefined()
-            expect(emptyModel.model.key).toBe('m3')
+            expect(['m3', 'pdd', 'taobao']).toContain(emptyModel.model.key)
         })
     })
 

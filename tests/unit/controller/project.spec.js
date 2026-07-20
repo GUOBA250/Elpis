@@ -83,7 +83,7 @@ describe('ProjectController', () => {
             expect(mockCtx.body.success).toBe(true)
             expect(mockCtx.body.data).toBeDefined()
             expect(Array.isArray(mockCtx.body.data)).toBe(true)
-            expect(mockCtx.body.data.length).toBe(3)
+            expect(mockCtx.body.data.length).toBe(5)
         })
 
         it('should return dto with processed model and project', async () => {

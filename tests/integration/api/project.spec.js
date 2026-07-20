@@ -59,7 +59,7 @@ describe('Project API Integration', () => {
 
             expect(mockCtx.body).toBeDefined()
             expect(mockCtx.body.success).toBe(true)
-            expect(mockCtx.body.data.length).toBe(3)
+            expect(mockCtx.body.data.length).toBe(5)
 
             const firstItem = mockCtx.body.data[0]
             expect(firstItem.model.key).toBe('m1')

@@ -14,9 +14,7 @@
             <el-dropdown @command="handleProjectCommand">
                 <span class="project-list">
                     {{ projName }}
-                    <el-icon v-if="projectStore.projectList.length > 1">
-                        <ArrowDown />
-                    </el-icon>
+                    <span v-if="projectStore.projectList.length > 1" class="arrow-icon">▼</span>
                 </span>
                 <template v-if="projectStore.projectList.length > 1" #dropdown>
                     <el-dropdown-menu>
@@ -33,25 +31,66 @@
 </template>
 
 <script setup>
+import { ref, watch, onMounted } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 import headerContainer from '$widgets/header-container/header-container.vue'
 import SubMenu from './complex-view/sub-menu/sub-menu.vue'
-import { useMenuStore } from '@/stores/menu-store'
-import { useProjectStore } from '@/stores/project-store'
-import { ArrowDown } from '@element-plus/icons-vue'
+import { useMenuStore } from '$store/menu.js'
+import { useProjectStore } from '$store/project.js'
 
-
-
-const menuStore = useMenuStore()
-const projectStore = useProjectStore()
-defineProps({
+const props = defineProps({
     projName: {
         type: String,
         default: ''
     }
 })
 
-const handleProjectCommand = function (command) {
-    projectStore.setProjectKey(command)
+const route = useRoute()
+const router = useRouter()
+const menuStore = useMenuStore()
+const projectStore = useProjectStore()
+
+const activeKey = ref('')
+
+const emit = defineEmits(['menu-select'])
+
+watch(() => route.query.key, () => {
+    setActiveKey()
+})
+
+watch(() => menuStore.menuList, () => {
+    setActiveKey()
+})
+
+onMounted(() => {
+    setActiveKey()
+})
+
+const setActiveKey = function () {
+    const menuItem = menuStore.findMenuItem({
+        key: 'key',
+        value: route.query.key
+    })
+    activeKey.value = menuItem?.key
+}
+
+const onMenuSelect = function (menuKey) {
+    const menuItem = menuStore.findMenuItem({
+        key: 'key',
+        value: menuKey
+    })
+    emit('menu-select', menuItem)
+    setActiveKey()
+}
+
+const handleProjectCommand = function (event) {
+    const projectItem = projectStore.projectList.find(item => item.key === event)
+    if (!projectItem || !projectItem.homePage) {
+        return
+    }
+    const { origin, pathname } = window.location
+    window.location.replace(`${origin}${pathname}#${projectItem.homePage}`)
+    window.location.reload()
 }
 </script>
 
@@ -65,6 +104,11 @@ const handleProjectCommand = function (command) {
     display: flex;
     align-items: center;
     outline: none;
+
+    .arrow-icon {
+        margin-left: 4px;
+        font-size: 12px;
+    }
 }
 
 :deep(.el-menu--horizontal.el-menu) {

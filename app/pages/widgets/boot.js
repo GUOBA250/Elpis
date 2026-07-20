@@ -14,19 +14,18 @@ import '../asserts/custom.css'
  * @param routes 路由配置
  * @param libs 插件配置
  */
-export default (pageComponent, { routes, libs}) => {
+export default (pageComponent, { routes, libs } = {}) => {
     const app = createApp(pageComponent)
 
-    // 应用 element-plus 插件
     app.use(ElementPlus)
 
-    // 引入 pinia
     app.use(pinia)
 
-    // 引入插件
-    libs.forEach(lib => {
-        app.use(lib)
-    })
+    if (libs && libs.length) {
+        libs.forEach(lib => {
+            app.use(lib)
+        })
+    }
 
     // 页面路由
     if (routes && routes.length) {
