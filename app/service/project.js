@@ -6,17 +6,16 @@ module.exports = (app) => {
         /**
          * 根据proj_key获取项目详情
          * @param {string} projKey 项目模型键
-         * @returns {Promise<Object>}
+         * @returns {Object|null}
          * */
         get(projKey) {
-            let projectConfig = null
-            modelList.forEach(modelItem => {
+            for (const modelItem of modelList) {
                 const { project } = modelItem
-                if (project[projKey]) {
-                    projectConfig = project[projKey]
+                if (project && project[projKey]) {
+                    return project[projKey]
                 }
-            })
-            return projectConfig
+            }
+            return null
         }
         /**
          * 获取当前 projectKey 对应模型下的项目列表（如果 projectKey 为空，则返回所有项目）
@@ -24,8 +23,6 @@ module.exports = (app) => {
          * @returns {Promise<Array>}
          */
         getList(projKey) {
-            const projectList = []
-
             return modelList.reduce((preList, modelItem) => {
                 const { project } = modelItem
 

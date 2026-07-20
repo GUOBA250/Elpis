@@ -187,5 +187,16 @@ describe('error-handler middleware', () => {
             expect(mockApp.logger.error).toHaveBeenCalledWith('[-- exception --]', testError)
             expect(mockApp.logger.error).toHaveBeenCalledWith('[-- exception --]', 500, 'Internal server error', 'Database timeout')
         })
+
+        it('should handle errors with circular references without crashing', async () => {
+            const circularError = { message: 'circular' }
+            circularError.self = circularError
+            mockNext.mockRejectedValue(circularError)
+            
+            await middleware(mockCtx, mockNext)
+            
+            expect(mockApp.logger.info).toHaveBeenCalledWith('[unserializable error]')
+            expect(mockCtx.body.success).toBe(false)
+        })
     })
 })

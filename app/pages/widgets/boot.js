@@ -8,7 +8,6 @@ import 'element-plus/dist/index.css'
 import '../asserts/custom.css'
 
 
-
 /**
  * vue 页面主入口，用于启动 vue
  * @param pageComponent vue 入口组件
@@ -18,7 +17,7 @@ import '../asserts/custom.css'
 export default (pageComponent, { routes, libs}) => {
     const app = createApp(pageComponent)
 
-    // 应用
+    // 应用 element-plus 插件
     app.use(ElementPlus)
 
     // 引入 pinia

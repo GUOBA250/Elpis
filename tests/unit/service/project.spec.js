@@ -85,4 +85,45 @@ describe('ProjectService', () => {
             expect(emptyModel.model.key).toBe('m3')
         })
     })
+
+    describe('get', () => {
+        it('should return project config when projKey exists', () => {
+            const result = projectService.get('p1')
+            expect(result).toBeDefined()
+            expect(result.key).toBe('p1')
+            expect(result.name).toBe('项目1')
+        })
+
+        it('should return null when projKey does not exist', () => {
+            const result = projectService.get('nonexistent')
+            expect(result).toBeNull()
+        })
+
+        it('should return null when projKey is empty', () => {
+            const result = projectService.get('')
+            expect(result).toBeNull()
+        })
+
+        it('should return null when projKey is null', () => {
+            const result = projectService.get(null)
+            expect(result).toBeNull()
+        })
+
+        it('should return null when projKey is undefined', () => {
+            const result = projectService.get(undefined)
+            expect(result).toBeNull()
+        })
+
+        it('should return project with correct fields', () => {
+            const result = projectService.get('p1')
+            expect(result).toHaveProperty('key')
+            expect(result).toHaveProperty('name')
+            expect(result).toHaveProperty('desc')
+            expect(result).toHaveProperty('homePage')
+        })
+
+        it('should not throw when project is empty object', () => {
+            expect(() => projectService.get('any_key')).not.toThrow()
+        })
+    })
 })
