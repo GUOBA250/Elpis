@@ -15,7 +15,7 @@ import $curl from '$common/curl.js';
 import { useProjectStore } from '$store/project.js';
 import { useMenuStore } from '$store/menu.js';
 import zhCN from 'element-plus/es/locale/lang/zh-cn'
-import headerView from './complex-view/header-view/header-view.vue'
+import HeaderView from './complex-view/header-view/header-view.vue'
 
 const projectStore = useProjectStore()
 const menuStore = useMenuStore()

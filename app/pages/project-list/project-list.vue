@@ -35,7 +35,9 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import $curl from '$common/curl.js'
-import headerContainer from '$widgets/header-container/header-container.vue'
+// 在 JS 中，用大写开头的驼峰
+// 在 template 中，用小写 + ‘-’ 连接单词
+import HeaderContainer from '$widgets/header-container/header-container.vue'
 
 const loading = ref(false)
 

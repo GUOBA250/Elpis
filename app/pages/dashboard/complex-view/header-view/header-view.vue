@@ -4,7 +4,7 @@
             <!-- 根据 menuStore.menuList 渲染 -->
             <el-menu :default-active="activeKey" :ellipsis="false" mode="horizontal" @select="onMenuSelect">
                 <template v-for="item in menuStore.menuList" :key="item.key">
-                    <SubMenu v-if="item.subMenu && item.subMenu.length > 0" :menuItem="item"></SubMenu>
+                    <sub-menu v-if="item.subMenu && item.subMenu.length > 0" :menuItem="item"></sub-menu>
                     <el-menu-item :index="item.key" v-else>{{ item.name }}</el-menu-item>
                 </template>
             </el-menu>
@@ -33,7 +33,7 @@
 <script setup>
 import { ref, watch, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import headerContainer from '$widgets/header-container/header-container.vue'
+import HeaderContainer from '$widgets/header-container/header-container.vue'
 import SubMenu from './complex-view/sub-menu/sub-menu.vue'
 import { useMenuStore } from '$store/menu.js'
 import { useProjectStore } from '$store/project.js'

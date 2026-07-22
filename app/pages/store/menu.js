@@ -33,9 +33,25 @@ export const useMenuStore = defineStore('menu', () => {
             }
         }
     }
+
+    /**
+     * 找出第一个菜单目录（深度优先查找第一个叶子节点）
+     * @param mList 菜单列表
+     */
+    const findFirstMenuItem = function (mList = menuList.value) {
+        if (!mList || mList.length === 0) { return }
+        const firstMenuItem = mList[0]
+        // 如果有子菜单，递归查找第一个叶子节点
+        if (firstMenuItem.subMenu && firstMenuItem.subMenu.length > 0) {
+            return findFirstMenuItem(firstMenuItem.subMenu)
+        }
+        return firstMenuItem
+    }
+
     return {
         menuList,
         setMenuList,
+        findFirstMenuItem,
         findMenuItem
     }
 
