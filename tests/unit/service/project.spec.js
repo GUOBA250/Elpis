@@ -13,11 +13,13 @@ describe('ProjectService', () => {
             const result = await projectService.getList()
             expect(result).toBeDefined()
             expect(Array.isArray(result)).toBe(true)
-            expect(result.length).toBe(4)
+            expect(result.length).toBe(6)
             expect(result.map(p => p.key)).toContain('p1')
             expect(result.map(p => p.key)).toContain('p2')
             expect(result.map(p => p.key)).toContain('p3')
             expect(result.map(p => p.key)).toContain('p4')
+            expect(result.map(p => p.key)).toContain('pdd')
+            expect(result.map(p => p.key)).toContain('taobao')
         })
 
         it('should return project with specified projKey', async () => {
@@ -40,14 +42,14 @@ describe('ProjectService', () => {
             const result = await projectService.getList('')
             expect(result).toBeDefined()
             expect(Array.isArray(result)).toBe(true)
-            expect(result.length).toBe(4)
+            expect(result.length).toBe(6)
         })
 
         it('should return empty array when projKey is null', async () => {
             const result = await projectService.getList(null)
             expect(result).toBeDefined()
             expect(Array.isArray(result)).toBe(true)
-            expect(result.length).toBe(4)
+            expect(result.length).toBe(6)
         })
 
         it('should return correct project structure', async () => {

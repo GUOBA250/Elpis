@@ -37,7 +37,7 @@ describe('Project API Integration', () => {
 
             expect(mockCtx.body).toBeDefined()
             expect(mockCtx.body.success).toBe(true)
-            expect(mockCtx.body.data.length).toBe(4)
+            expect(mockCtx.body.data.length).toBe(6)
         })
 
         it('should return filtered projects when proj_key is provided', async () => {

@@ -10,9 +10,13 @@ module.exports = (app) => {
          * */
         get(projKey) {
             for (const modelItem of modelList) {
-                const { project } = modelItem
+                const { project, config } = modelItem
                 if (project && project[projKey]) {
-                    return project[projKey]
+                    // 合并模型配置（包含 menu）和项目基本信息，项目信息优先级更高
+                    return {
+                        ...config,
+                        ...project[projKey]
+                    }
                 }
             }
             return null

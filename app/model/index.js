@@ -29,12 +29,16 @@ module.exports = () => {
         },
         {
             model: { key: 'pdd', name: '拼多多', desc: '拼多多数据监控仪表板' },
-            project: {},
+            project: {
+                pdd: { key: 'pdd', name: '拼多多', desc: '拼多多数据监控仪表板', homePage: '/iframe' },
+            },
             config: pdd()
         },
         {
             model: { key: 'taobao', name: '淘宝', desc: '淘宝数据监控仪表板' },
-            project: {},
+            project: {
+                taobao: { key: 'taobao', name: '淘宝', desc: '淘宝数据监控仪表板', homePage: '/iframe' },
+            },
             config: taobao()
         }
     ]

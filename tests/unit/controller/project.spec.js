@@ -40,7 +40,7 @@ describe('ProjectController', () => {
             expect(mockCtx.body.success).toBe(true)
             expect(mockCtx.body.data).toBeDefined()
             expect(Array.isArray(mockCtx.body.data)).toBe(true)
-            expect(mockCtx.body.data.length).toBe(4)
+            expect(mockCtx.body.data.length).toBe(6)
         })
 
         it('should return filtered projects when projKey is provided', async () => {
