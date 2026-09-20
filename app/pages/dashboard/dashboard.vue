@@ -1,95 +1,92 @@
 <template>
-    <el-config-provider :locale="zhCN">
-        <header-view :projName="projName" @menu-select="onMenuSelect">
-            <template #main-content>
-                <router-view></router-view>
-            </template>
-        </header-view>
-    </el-config-provider>
+  <el-config-provider :locale="zhCn">
+    <header-view :proj-name="projName" @menu-select="onMenuSelect">
+      <template #main-content>
+        <router-view />
+      </template>
+    </header-view>
+  </el-config-provider>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
-import $curl from '$common/curl.js';
-import { useProjectStore } from '$store/project.js';
-import { useMenuStore } from '$store/menu.js';
-import zhCN from 'element-plus/es/locale/lang/zh-cn'
-import HeaderView from './complex-view/header-view/header-view.vue'
+import { ref, onMounted } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+import zhCn from 'element-plus/es/locale/lang/zh-cn';
+import HeaderView from './complex-view/header-view/header-view.vue';
+import $curl from '$elpisCommon/curl';
 
-const projectStore = useProjectStore()
-const menuStore = useMenuStore()
-const router = useRouter()
-const route = useRoute()
+import { useMenuStore } from '$elpisStore/menu.js';
+import { useProjectStore } from '$elpisStore/project.js';
+
+const router = useRouter();
+const route = useRoute();
+const menuStore = useMenuStore();
+const projectStore = useProjectStore();
+
+const projName = ref('');
 
 onMounted(() => {
-    getProjectList()
-    getProjectConfig()
-})
+  getProjectList();
+  getProjectConfig();
+});
 
-const projName = ref('')
-
-// 请求 /api/project/list 接口，并填充到 project-store中
+// 请求 /api/proj/list 接口，并缓存到store
 async function getProjectList() {
-    const res = await $curl({
-        method: 'GET',
-        url: '/api/project/list',
-        params: {
-            // TODO: 动态获取当前项目key，暂时先写死 pdd
-            project_key: 'pdd',
-        }
-    })
-
-    if (!res || !res.success || !res.data) {
-        return
+  const res = await $curl({
+    method: 'get',
+    url: '/api/proj/list',
+    query: {
+      proj_key: route.query.proj_key
     }
-
-    projectStore.setProjectList(res.data)
+  });
+  if (!res || !res.success || !res.data) {
+    return;
+  }
+  projectStore.setProjectList(res.data);
 }
 
-
-// 请求 project 接口
+// 请求 /api/proj 接口，并缓存到store
 async function getProjectConfig() {
-    const res = await $curl({
-        method: 'GET',
-        url: '/api/project',
-        params: {
-            // TODO: 动态获取当前项目key，暂时先写死 pdd
-            proj_key: 'pdd',
-        }
-    })
-
-    if (!res || !res.success || !res.data) {
-        return
+  const res = await $curl({
+    method: 'get',
+    url: '/api/proj',
+    query: {
+      proj_key: route.query.proj_key
     }
+  });
+  if (!res || !res.success || !res.data) {
+    return;
+  }
 
-    projName.value = res.data.name
-    menuStore.setMenuList(res.data.menu)
+  const { name, menu } = res.data;
+  projName.value = name;
+  menuStore.setMenuList(menu);
 }
 
-// 点击菜单回调方法
-const onMenuSelect = function (menuItem) {
-    const { moduleType, key, customConfig } = menuItem
+// 点击菜单回调
+const onMenuSelect = (menuItem) => {
+  const { moduleType, key, customConfig } = menuItem;
+  if (key === route.query.key) return;
 
-    // 如果是当前页面，不处理
-    if (key === route.query.key) {
-        return
-    }
-    const pathMap = {
-        sider: '/sider',
-        iframe: '/iframe',
-        schema: '/schema',
-        custom: customConfig?.path
-    }
-    router.push({
-        path: pathMap[moduleType],
-        query: {
-            key,
-            proj_key: route.query.proj_key
-        }
-    })
-}
+  const pathMap = {
+    sider: '/sider',
+    iframe: '/iframe',
+    schema: '/schema',
+    custom: customConfig?.path
+  };
 
+  router.push({
+    path: `/view/dashboard${pathMap[moduleType]}`,
+    query: {
+      key,
+      proj_key: route.query.proj_key
+    }
+  });
+};
 </script>
 
-<style lang="less" scoped></style>
+<style lang="less" scoped>
+:deep(.el-main) {
+  padding: 0;
+}
+</style>

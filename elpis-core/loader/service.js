@@ -1,49 +1,64 @@
-const path = require('path');
-const glob = require('glob');
-const { sep } = path
+const glob = require("glob");
+const path = require("path");
+const { sep } = path;
+const _ = require("lodash");
+
 /**
  * service loader
- * @param {object} app Koa 实例
- * 
- * 加载所有 service， 可通过app.service.${目录}.${文件} 访问
- * 例子：
- * app/service/custom-module/custom-service.js 
- * => app.service.customModule.customService
+ * @param {Object} app Koa 实例
+ * 加载所有service，可通过’app.service.${目录}.${文件}‘的方式访问
+ * 例子:
+  app/service
+  └── custom-module
+      └── custom-service.js
+  访问方式: app.service.customModule.customService
+ *
  */
 module.exports = (app) => {
-    // 读取 app/service/**/*.js  下所有的文件
-    const servicePath = path.resolve(app.businessPath, 'service');
-    const fileList = glob.sync(path.resolve(servicePath, `**${sep}*.js`));
+  // 遍历所有文件
+  const service = {};
 
+  // 读取 elpis/app/service 目录下的所有文件
+  const elpisServicePath = path.resolve(__dirname, `..${sep}..${sep}app${sep}service`);
+  const elpisFileList = glob.sync(
+    path.resolve(elpisServicePath, `.${sep}**${sep}**.js`)
+  );
+  elpisFileList.forEach((file) => handleFile(file));
 
-    //遍历所有文件目录，把内容加载到app.services 下
-    const services = {};
-    fileList.forEach(file => {
-        // 提取文件名称
-        let name = path.resolve(file);
+  // 读取 业务/app/service 目录下的所有文件
+  const bussinessServicePath = path.resolve(
+    app.bussinessPath,
+    `.${sep}service`
+  );
+  const bussinessFileList = glob.sync(
+    path.resolve(bussinessServicePath, `.${sep}**${sep}**.js`)
+  );
+  bussinessFileList.forEach((file) => handleFile(file));
 
-        // 截取路径
-        name = name.substring(name.lastIndexOf(`service${sep}`) + `service${sep}`.length, name.lastIndexOf(`.`));
+  function handleFile(file) {
+    // 例：/Users/xxx/Documents/elpis/elpis/app/service/modules/a/b/custom.js
+    let name = path.resolve(file);
+    // 截取app/service后面的路径 => modules/a/b/custom
+    name = name.substring(
+      name.lastIndexOf(`service${sep}`) + `service${sep}`.length,
+      name.lastIndexOf(".")
+    );
+    // 转成驼峰格式（对每个路径段单独转换）
+    name = name.split(sep).map(s => _.camelCase(s)).join(sep);
 
-        // 把 ‘-’ 统一改成驼峰式
-        name = name.replace(/-/g, (match) => match.toUpperCase());
+    // 挂载service到app上
+    let tempServices = service;
+    const names = name.split(sep);
+    names.forEach((n, i) => {
+      if (i === names.length - 1) {
+        const ServiceModule = require(path.resolve(file))(app);
+        tempServices[n] = new ServiceModule();
+      } else {
+        tempServices[n] = tempServices[n] || {};
+        tempServices = tempServices[n];
+      }
+    });
+  }
 
-        // 挂载 service 到内存 app 对象中
-        let tempService = services
-        const names = name.split(sep)
-        for (let i = 0, len = names.length; i < len; i++) {
-            if (i === len - 1) {
-                const ServiceModule = require(path.resolve(file))(app);
-                tempService[names[i]] = new ServiceModule();
-            } else {
-                if (!tempService[names[i]]) {
-                    tempService[names[i]] = {}
-                }
-
-                tempService = tempService[names[i]]
-            }
-        }
-    })
-    app.service = services;
-}
-
+  app.service = service;
+};

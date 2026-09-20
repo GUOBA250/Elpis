@@ -1,47 +1,60 @@
-const path = require('path');
-const glob = require('glob');
-const {sep} = path
+const glob = require("glob");
+const path = require("path");
+const { sep } = path;
+const _ = require("lodash");
+
 /**
  * middleware loader
- * @param {object} app Koa 实例
- * 
- * 加载所有 middleware， 可通过app.middleware.${目录}.${文件} 访问
- * 例子：
- * app/middleware/custom-module/custom-middleware.js 
- * => app.middleware.customModule.customMiddleware
- */ 
+ * @param {Object} app Koa 实例
+ * 加载所有middleware，可通过’app.middleware.${目录}.${文件}‘的方式访问
+ * 例子:
+  app/middleware
+  └── custom-module
+      └── custom-middle.js
+  访问方式: app.middleware.customModule.customMiddle
+ *
+ */
 module.exports = (app) => {
-    // 读取 app/middleware/**/*.js  下所有的文件
-    const middlewarePath = path.resolve(app.businessPath, 'middleware');
-    const fileList = glob.sync(path.resolve(middlewarePath, `**${sep}*.js`));
+  // 遍历所有文件
+  const middlewares = {};
 
+  // 读取 elpis/app/middleware 目录下的所有文件
+  const elpisMiddlewarePath = path.resolve(__dirname, `..${sep}..${sep}app${sep}middleware`);
+  const elpisFileList = glob.sync(
+    path.resolve(elpisMiddlewarePath, `.${sep}**${sep}**.js`)
+  );
+  elpisFileList.forEach((file) => handleFile(file));
 
-    //遍历所有文件目录，把内容加载到app.middlewares 下
-    const middlewares = {};
-    fileList.forEach(file => {
-        // 提取文件名称
-        let name = path.resolve(file);
+  // 读取 业务/app/middleware 目录下的所有文件
+  const bussinessMiddlewarePath = path.resolve(app.bussinessPath, `.${sep}middleware`);
+  const bussinessFileList = glob.sync(
+    path.resolve(bussinessMiddlewarePath, `.${sep}**${sep}**.js`)
+  );
+  bussinessFileList.forEach((file) => handleFile(file));
 
-        // 截取路径
-        name = name.substring(name.lastIndexOf(`middleware${sep}`) + `middleware${sep}`.length, name.lastIndexOf(`.`));
-        
-        // 把 ‘-’ 统一改成驼峰式
-        name = name.replace(/-(\w)/g, (match, letter) => letter.toUpperCase());
+  function handleFile(file) {
+    // 例：/Users/xxx/Documents/elpis/elpis/app/middleware/modules/a/b/custom.js
+    let name = path.resolve(file);
+    // 截取app/middleware后面的路径 => modules/a/b/custom
+    name = name.substring(
+      name.lastIndexOf(`middleware${sep}`) + `middleware${sep}`.length,
+      name.lastIndexOf(".")
+    );
+    // 转成驼峰格式（对每个路径段单独转换）
+    name = name.split(sep).map(s => _.camelCase(s)).join(sep);
 
-        // 挂载 middleware 到内存 app 对象中
-        let tempMiddleware = middlewares
-        const names = name.split(sep)
-        for(let i = 0, len = names.length; i < len; i++) {
-            if(i === len - 1){
-                tempMiddleware[names[i]] = require(path.resolve(file))(app);
-            }else {
-                if(!tempMiddleware[names[i]]) {
-                    tempMiddleware[names[i]] = {}
-                }
-                
-                tempMiddleware = tempMiddleware[names[i]]
-            }
-        }
-    })
-    app.middlewares = middlewares;
-}
+    // 挂载middleware到app上
+    let tempMiddlewares = middlewares;
+    const names = name.split(sep);
+    names.forEach((n, i) => {
+      if (i === names.length - 1) {
+        tempMiddlewares[n] = require(path.resolve(file))(app);
+      } else {
+        tempMiddlewares[n] = tempMiddlewares[n] || {};
+        tempMiddlewares = tempMiddlewares[n];
+      }
+    });
+  }
+
+  app.middlewares = middlewares;
+};

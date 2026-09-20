@@ -1,22 +1,16 @@
-import { defineStore } from 'pinia'
-import { ref } from 'vue'
+import { defineStore } from "pinia";
+import { ref } from "vue";
 
-export const useProjectStore = defineStore('project', () => {
-    const projectList = ref([])
-    const projectKey = ref('')
+export const useProjectStore = defineStore("project", () => {
+  // 菜单列表
+  const projectList = ref([]);
 
-    const setProjectList = function (list) {
-        projectList.value = list
-    }
-
-    const setProjectKey = function (key) {
-        projectKey.value = key
-    }
-
-    return {
-        projectList,
-        projectKey,
-        setProjectList,
-        setProjectKey
-    }
-})
+  // 设置 project 配置
+  const setProjectList = function (list) {
+    projectList.value = list;
+  };
+  return {
+    projectList,
+    setProjectList,
+  };
+});

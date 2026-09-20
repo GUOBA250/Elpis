@@ -1,35 +1,55 @@
-const KoaRouter = require('koa-router');
-const path = require('path');
-const glob = require('glob');
-const { sep } = path; // 兼容不同操作系统上的斜杠 
+const glob = require("glob");
+const path = require("path");
+const { sep } = path;
+
+const KoaRouter = require("koa-router");
 
 /**
  * router loader
- * @param {object} app Koa 实例
- * 
- * 解析所有 app/router 下所有 js 文件， 加载到 KoaRouter 下
+ * @param {Object} app Koa 实例
+ *
+ * 解析所有 app/router 目录下的所有文件，加载到KoaRouter中
  */
 module.exports = (app) => {
-    // 找到路由文件路径
-    const routerPath = path.resolve(app.businessPath, 'router');
-    
-    // 实例化 KoaRouter
-    const router = new KoaRouter();
-    
-    // 注册所有路由
-    const fileList = glob.sync(path.resolve(routerPath, `**${sep}*.js`));
-    fileList.forEach((file) => {
+  // 实例化 KoaRouter
+  const router = new KoaRouter();
 
-        //module.exports = (app, router) => router.get('xxxx/x//x/x/', xxxController.index)
-        require(path.resolve(file))(app, router)
-    });
+  // 找到 elpis 路由文件
+  const elpisRouterPath = path.resolve(
+    __dirname,
+    `..${sep}..${sep}app${sep}router`
+  );
 
-    // 路由兜底 （健壮性）
-    router.get('*', async (ctx, next) => {
-        ctx.redirect(`${app?.options?.homePath || '/'}`);
-    });
-    
-    // 路由注册到 app 上
-    app.use(router.routes());
-    app.use(router.allowedMethods());
-}
+  // 注册所有 elpis 路由
+  const elpisFileList = glob.sync(
+    path.resolve(elpisRouterPath, `.${sep}**${sep}**.js`)
+  );
+  elpisFileList.forEach((file) => {
+    // router file 导出一个函数，参数为 app 和 router
+    // 执行函数时，会将路由注册到koa-router上
+    require(path.resolve(file))(app, router);
+  });
+
+  // 找到 业务 路由文件
+  const businessRouterPath = path.resolve(app.bussinessPath, `.${sep}router`);
+
+  // 注册所有 业务 路由
+  const businessFileList = glob.sync(
+    path.resolve(businessRouterPath, `.${sep}**${sep}**.js`)
+  );
+  businessFileList.forEach((file) => {
+    // router file 导出一个函数，参数为 app 和 router
+    // 执行函数时，会将路由注册到koa-router上
+    require(path.resolve(file))(app, router);
+  });
+
+  // 路由兜底
+  router.get("*", async (ctx) => {
+    ctx.status = 302; // 临时重定向
+    ctx.redirect(`${app?.options?.homePage ?? "/"}`);
+  });
+
+  // 路由挂载到app上
+  app.use(router.routes());
+  app.use(router.allowedMethods());
+};

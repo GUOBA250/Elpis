@@ -1,117 +1,145 @@
 <template>
-    <header-container :title="projName">
-        <template #menu-content>
-            <!-- 根据 menuStore.menuList 渲染 -->
-            <el-menu :default-active="activeKey" :ellipsis="false" mode="horizontal" @select="onMenuSelect">
-                <template v-for="item in menuStore.menuList" :key="item.key">
-                    <sub-menu v-if="item.subMenu && item.subMenu.length > 0" :menuItem="item"></sub-menu>
-                    <el-menu-item :index="item.key" v-else>{{ item.name }}</el-menu-item>
-                </template>
-            </el-menu>
+  <header-container :title="projName">
+    <template #menu-content>
+      <!-- 根据 menuStore.menuList 渲染 -->
+      <el-menu
+        :default-active="activeKey"
+        :ellipsis="false"
+        mode="horizontal"
+        @select="onMenuSelect"
+      >
+        <template v-for="item in menuStore.menuList">
+          <sub-menu
+            v-if="item.subMenu && item.subMenu.length > 0"
+            :key="item.key"
+            :menu-item="item"
+          ></sub-menu>
+          <el-menu-item v-else :index="item.key">
+            {{ item.name }}
+          </el-menu-item>
         </template>
-        <template #setting-content>
-            <!-- 根据 projStore.projectList 渲染-->
-            <el-dropdown @command="handleProjectCommand">
-                <span class="project-list">
-                    {{ projName }}
-                    <span v-if="projectStore.projectList.length > 1" class="arrow-icon">▼</span>
-                </span>
-                <template v-if="projectStore.projectList.length > 1" #dropdown>
-                    <el-dropdown-menu>
-                        <el-dropdown-item v-for="item in projectStore.projectList" :key="item.key" :command="item.key"
-                            :disabled="item.name === projName">
-                            {{ item.name }}
-                        </el-dropdown-item>
-                    </el-dropdown-menu>
-                </template>
-            </el-dropdown>
+      </el-menu>
+    </template>
+    <template #setting-content>
+      <!-- 根据 projectStore.projectList 渲染 -->
+      <el-dropdown @command="handleProjectCommand">
+        <span class="project-list">
+          {{ projName }}
+          <el-icon
+            v-if="projectStore.projectList.length > 1"
+            class="el-icon-right"
+          >
+            <ArrowDown />
+          </el-icon>
+        </span>
+        <template v-if="projectStore.projectList.length > 1" #dropdown>
+          <el-dropdown-menu>
+            <el-dropdown-item
+              v-for="item in projectStore.projectList"
+              :key="item.key"
+              :command="item.key"
+              :disabled="item.name === projName"
+            >
+              {{ item.name }}
+            </el-dropdown-item>
+          </el-dropdown-menu>
         </template>
-        <template #main-content></template>
-    </header-container>
+      </el-dropdown>
+    </template>
+    <template #main-content>
+      <slot name="main-content"></slot>
+    </template>
+  </header-container>
 </template>
 
 <script setup>
-import { ref, watch, onMounted } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
-import HeaderContainer from '$widgets/header-container/header-container.vue'
-import SubMenu from './complex-view/sub-menu/sub-menu.vue'
-import { useMenuStore } from '$store/menu.js'
-import { useProjectStore } from '$store/project.js'
+import { ref, watch, onMounted } from "vue";
+import { useRoute } from "vue-router";
+import { ArrowDown } from "@element-plus/icons-vue";
+import HeaderContainer from "$elpisWidgets/header-container/header-container.vue";
+import SubMenu from "./complex-view/sub-menu/sub-menu.vue";
+import { useMenuStore } from "$elpisStore/menu.js";
+import { useProjectStore } from "$elpisStore/project.js";
 
-const props = defineProps({
-    projName: {
-        type: String,
-        default: ''
-    }
-})
+const route = useRoute();
+const menuStore = useMenuStore();
+const projectStore = useProjectStore();
 
-const route = useRoute()
-const router = useRouter()
-const menuStore = useMenuStore()
-const projectStore = useProjectStore()
+defineProps({
+  projName: {
+    type: String,
+    default: "",
+  },
+});
 
-const activeKey = ref('')
+const emit = defineEmits(["menu-select"]);
 
-const emit = defineEmits(['menu-select'])
+const activeKey = ref("");
 
-watch(() => route.query.key, () => {
-    setActiveKey()
-})
+const setActiveKey = () => {
+  let menuItem;
+  if (menuStore.findMenuItem) {
+    menuItem = menuStore.findMenuItem({
+      key: "key",
+      value: route.query.key,
+    });
+  }
+  activeKey.value = menuItem?.key;
+};
 
-watch(() => menuStore.menuList, () => {
-    setActiveKey()
-})
+watch(
+  () => route.query.key,
+  () => {
+    setActiveKey();
+  }
+);
+
+watch(
+  () => menuStore.menuList,
+  () => {
+    setActiveKey();
+  },
+  { deep: true }
+);
 
 onMounted(() => {
-    setActiveKey()
-})
+  setActiveKey();
+});
 
-const setActiveKey = function () {
-    const menuItem = menuStore.findMenuItem({
-        key: 'key',
-        value: route.query.key
-    })
-    activeKey.value = menuItem?.key
-}
+const onMenuSelect = (menuKey) => {
+  const menuItem = menuStore.findMenuItem({
+    key: "key",
+    value: menuKey,
+  });
+  emit("menu-select", menuItem);
+};
 
-const onMenuSelect = function (menuKey) {
-    const menuItem = menuStore.findMenuItem({
-        key: 'key',
-        value: menuKey
-    })
-    emit('menu-select', menuItem)
-    setActiveKey()
-}
+const handleProjectCommand = (event) => {
+  const projectItem = projectStore.projectList.find(
+    (item) => item.key === event
+  );
 
-const handleProjectCommand = function (event) {
-    const projectItem = projectStore.projectList.find(item => item.key === event)
-    if (!projectItem || !projectItem.homePage) {
-        return
-    }
-    const { origin, pathname } = window.location
-    window.location.replace(`${origin}${pathname}#${projectItem.homePage}`)
-    window.location.reload()
-}
+  if (!projectItem || !projectItem.homePage) {
+    return;
+  }
+
+  const { origin } = window.location;
+  // 页面跳转
+  window.location.replace(`${origin}${projectItem.homePage}`);
+
+};
 </script>
-
-
 
 <style lang="less" scoped>
 .project-list {
-    margin-right: 20px;
-    cursor: pointer;
-    color: var(--el-color-primary);
-    display: flex;
-    align-items: center;
-    outline: none;
-
-    .arrow-icon {
-        margin-left: 4px;
-        font-size: 12px;
-    }
+  margin-right: 20px;
+  cursor: pointer;
+  color: var(--el-color-primary);
+  display: flex;
+  align-items: center;
+  outline: none;
 }
-
 :deep(.el-menu--horizontal.el-menu) {
-    border-bottom: 0
+  border-bottom: none;
 }
 </style>

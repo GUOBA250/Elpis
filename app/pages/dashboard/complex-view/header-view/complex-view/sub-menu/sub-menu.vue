@@ -1,16 +1,29 @@
 <template>
-    <el-sub-menu :index="menuItem.key">
-        <template #title>{{ menuItem.name }}</template>
-        <div :key="item.key" v-for="item in menuItem.subMenu">
-            <sub-menu v-if="item.subMenu && item.subMenu.length > 0" :menuItem="item"></sub-menu>
-            <el-menu-item :index="item.key" v-else>{{ item.name }}</el-menu-item>
-        </div>
+  <el-sub-menu :index="menuItem.key">
+    <template #title>
+      <span>{{ menuItem.name }}</span>
+    </template>
 
-    </el-sub-menu>
+    <template v-for="item in menuItem.subMenu">
+      <sub-menu
+        v-if="item.subMenu && item.subMenu.length > 0"
+        :key="item.key"
+        :menu-item="item"
+      ></sub-menu>
+      <el-menu-item v-else :index="item.key">
+        {{ item.name }}
+      </el-menu-item>
+    </template>
+  </el-sub-menu>
 </template>
 
 <script setup>
-const { menuItem } = defineProps(['menuItem'])
+const { menuItem } = defineProps({
+  menuItem: {
+    type: Object,
+    required: true,
+  },
+});
 </script>
 
 <style lang="less" scoped></style>

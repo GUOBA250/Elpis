@@ -1,30 +1,30 @@
 <template>
-    <el-container>
-        <el-aside width="200px" class="aside">
-            <slot name="menu-content" />
-        </el-aside>
-        <el-main class="main">
-            <slot name="main-content" />
-        </el-main>
-    </el-container>
+  <el-container class="sider-container">
+    <el-aside width="200px" class="aside">
+      <slot name="menu-content" />
+    </el-aside>
+    <el-main class="main">
+      <slot name="main-content" />
+    </el-main>
+  </el-container>
 </template>
 
 <script setup></script>
 
-<style scoped lang="less">
+<style lang="less" scoped>
 .sider-container {
-    height: 100%;
+  height: 100%;
 
-    .aside {
-        border-right: 1px solid #e4e7ed;
-    }
+  .aside {
+    border-right: 1px solid #e8e8e8;
+  }
 
-    .main {
-        overflow: scroll
-    }
+  .main{
+    overflow: auto;
+  }
 }
 
 :deep(.el-menu) {
-    border-right: 0;
+  border-right: 0 ;
 }
 </style>
